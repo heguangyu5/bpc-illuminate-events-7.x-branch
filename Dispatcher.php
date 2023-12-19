@@ -440,13 +440,8 @@ class Dispatcher implements DispatcherContract
      */
     protected function handlerShouldBeQueued($class)
     {
-        try {
-            return (new ReflectionClass($class))->implementsInterface(
-                ShouldQueue::class
-            );
-        } catch (Exception $e) {
-            return false;
-        }
+        $implements = class_implements($class);
+        return isset($implements[ShouldQueue::class]);
     }
 
     /**
@@ -522,6 +517,9 @@ class Dispatcher implements DispatcherContract
      */
     protected function createListenerAndJob($class, $method, $arguments)
     {
+        throw new \Exception("BPC TODO");
+        return; // bpc will drop statements after return
+
         $listener = (new ReflectionClass($class))->newInstanceWithoutConstructor();
 
         return [$listener, $this->propagateListenerOptions(

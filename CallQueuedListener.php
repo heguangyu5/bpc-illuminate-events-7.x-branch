@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 
 class CallQueuedListener implements ShouldQueue
 {
-    use InteractsWithQueue;
+//    use InteractsWithQueue;
 
     /**
      * The listener class name.
@@ -101,6 +101,9 @@ class CallQueuedListener implements ShouldQueue
      */
     protected function setJobInstanceIfNecessary(Job $job, $instance)
     {
+        throw new \Exception('BPC TODO');
+        return; // bpc will drop statements after return
+
         if (in_array(InteractsWithQueue::class, class_uses_recursive($instance))) {
             $instance->setJob($job);
         }
